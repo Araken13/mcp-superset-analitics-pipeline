@@ -1,0 +1,15 @@
+# Kafka
+kafka-python==2.0.2
+
+# Spark (para desenvolvimento local - opcional)
+pyspark==3.5.0
+
+# Utilitários
+pandas==2.1.4
+numpy==1.26.2
+
+# MCP Server
+mcp
+docker
+psycopg2-binary
+requests
