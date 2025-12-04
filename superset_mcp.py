@@ -216,5 +216,122 @@ def inject_event(evento_tipo: str, valor: float, usuario: str = "manual_user") -
     except Exception as e:
         return f"❌ Erro ao injetar evento: {str(e)}"
 
+
+# ==============================================================================
+# INTEGRAÇÃO SUPABASE (LOVABLE SITE)
+# ==============================================================================
+
+@mcp.tool()
+def sync_leads_from_supabase(limit: int = 100, hours_ago: int = 24) -> str:
+    """
+    Sincroniza leads do Supabase (LOVABLE SITE) para o pipeline Kafka.
+    
+    Args:
+        limit: Número máximo de leads a sincronizar
+        hours_ago: Considerar apenas leads criados nas últimas N horas
+    
+    Exemplo:
+        sync_leads_from_supabase(limit=50, hours_ago=12)
+    """
+    try:
+        from supabase_to_kafka import sync_leads_to_kafka
+        
+        result = sync_leads_to_kafka(limit=limit, hours_ago=hours_ago)
+        
+        if result.get("status") == "success":
+            total_processed = result.get("total_processed", 0)
+            total_found = result.get("total_found", 0)
+            summary = result.get("summary", {})
+            
+            response = f"""✅ Sincronização concluída!
+
+📊 Resumo:
+• Total encontrado: {total_found} leads
+• Total enviado ao Kafka: {total_processed} eventos
+• Período: Últimas {hours_ago}h
+• Score mais alto: {summary.get('highest_score', 'N/A')}
+• Score médio: {summary.get('average_score', 'N/A'):.1f}
+
+📈 Por Status:"""
+            
+            for status, count in summary.get('status_breakdown', {}).items():
+                response += f"\n   • {status}: {count}"
+                
+            return response
+        else:
+            return f"❌ Erro: {result.get('error', 'Erro desconhecido')}"
+            
+    except Exception as e:
+        return f"❌ Erro ao sincronizar leads: {str(e)}"
+
+
+@mcp.tool()
+def sync_chat_sessions_from_supabase(limit: int = 50, hours_ago: int = 24) -> str:
+    """
+    Sincroniza sessões de chat do Supabase para o pipeline Kafka.
+    
+    Args:
+        limit: Número máximo de sessões a sincronizar
+        hours_ago: Considerar apenas sessões nas últimas N  horas
+    
+    Exemplo:
+        sync_chat_sessions_from_supabase(limit=30, hours_ago=6)
+    """
+    try:
+        from supabase_to_kafka import sync_chat_sessions_to_kafka
+        
+        result = sync_chat_sessions_to_kafka(limit=limit, hours_ago=hours_ago)
+        
+        if result.get("status") == "success":
+            total_processed = result.get("total_processed", 0)
+            total_found = result.get("total_found", 0)
+            
+            return f"""✅ Sincronização de sessões concluída!
+
+📊 Resumo:
+• Total encontrado: {total_found} sessões
+• Total enviado ao Kafka: {total_processed} eventos
+• Período: Últimas {hours_ago}h
+• Tópico Kafka: {result.get('topic')}"""
+        else:
+            return f"❌ Erro: {result.get('error', 'Erro desconhecido')}"
+            
+    except Exception as e:
+        return f"❌ Erro ao sincronizar sessões: {str(e)}"
+
+
+@mcp.tool()
+def get_supabase_dashboard() -> str:
+    """
+    Obtém estatísticas gerais do Supabase (LOVABLE SITE).
+    
+    Mostra métricas de leads, qualificação, sessões ativas, etc.
+    """
+    try:
+        from supabase_to_kafka import get_supabase_stats
+        
+        stats= get_supabase_stats()
+        
+        if "error" in stats:
+            return f"❌ Erro: {stats.get('error')}"
+        
+        return f"""📊 Dashboard Supabase - {stats.get('database')}
+
+🎯 Leads:
+   • Total de leads: {stats.get('total_leads')}
+   • Leads qualificados (score ≥ 50): {stats.get('qualified_leads')}
+   • Taxa de qualificação: {stats.get('qualification_rate')}%
+   • Leads nas últimas 24h: {stats.get('recent_leads_24h')}
+
+💬 Sessões:
+   • Sessões ativas: {stats.get('active_sessions')}
+
+🔗 Conexão:
+   • URL: {stats.get('supabase_url')}
+   • Status: ✅ Conectado"""
+    except Exception as e:
+        return f"❌ Erro ao obter estatísticas: {str(e)}"
+
+
 if __name__ == "__main__":
     mcp.run()

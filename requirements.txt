@@ -13,3 +13,6 @@ mcp>=1.22.0
 docker>=7.1.0
 psycopg2-binary>=2.9.11
 requests>=2.32.0
+
+# Integração Supabase
+supabase>=2.11.0
