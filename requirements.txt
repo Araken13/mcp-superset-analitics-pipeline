@@ -1,5 +1,5 @@
-# Kafka
-kafka-python==2.0.2
+# Kafka (versão mantida e compatível com Python 3.12+)
+kafka-python-ng==2.2.3
 
 # Spark (para desenvolvimento local - opcional)
 pyspark==3.5.0
@@ -9,7 +9,7 @@ pandas==2.1.4
 numpy==1.26.2
 
 # MCP Server
-mcp
-docker
-psycopg2-binary
-requests
+mcp>=1.22.0
+docker>=7.1.0
+psycopg2-binary>=2.9.11
+requests>=2.32.0

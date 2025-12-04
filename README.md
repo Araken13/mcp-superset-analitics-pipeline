@@ -1,4 +1,5 @@
 # 🚀 Pipeline de Dados em Tempo Real
+
 ## Kafka + Spark Streaming + Postgres + Elasticsearch + Superset + Kibana
 
 Pipeline completo para processamento de eventos em tempo real, com armazenamento, agregações e visualização.
@@ -7,13 +8,14 @@ Pipeline completo para processamento de eventos em tempo real, com armazenamento
 
 ## 📋 Arquitetura
 
-```
+```text
 Kafka → Spark Streaming → Postgres + Elasticsearch
                               ↓              ↓
                          Superset        Kibana
 ```
 
-### Componentes:
+### Componentes
+
 - **Kafka**: Ingestão de eventos em tempo real
 - **Zookeeper**: Coordenação do Kafka
 - **Spark**: Processamento e transformação dos dados
@@ -27,7 +29,7 @@ Kafka → Spark Streaming → Postgres + Elasticsearch
 
 ## 🗂️ Estrutura do Projeto
 
-```
+```text
 .
 ├── docker-compose.yml          # Orquestração de containers
 ├── Dockerfile.spark            # Imagem customizada do Spark
@@ -38,8 +40,46 @@ Kafka → Spark Streaming → Postgres + Elasticsearch
 ├── init_superset.sh           # Script para inicializar Superset
 ├── run_spark.sh               # Script para executar Spark job
 ├── test_pipeline.sh           # Teste end-to-end
+├── superset_mcp.py            # 🤖 Servidor MCP (NOVO!)
+├── test_mcp.py                # Testes do servidor MCP
+├── setup_mcp.sh               # Setup automatizado do MCP
+├── MCP_DOCUMENTATION.md       # Documentação completa do MCP
 └── README.md                  # Este arquivo
 ```
+
+---
+
+## 🤖 Servidor MCP (Model Context Protocol)
+
+**NOVO!** Este projeto agora inclui um servidor MCP que permite controlar e monitorar o pipeline através de linguagem natural ou chamadas programáticas.
+
+### Início Rápido do MCP
+
+```bash
+# Setup automatizado (recomendado)
+chmod +x setup_mcp.sh
+./setup_mcp.sh
+
+# OU setup manual:
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Ferramentas Disponíveis
+
+- 👁️ **Observabilidade**: `get_pipeline_status()`, `check_kafka_lag()`, `get_spark_metrics()`
+- 💾 **Dados**: `query_raw_events()`, `search_elasticsearch()`
+- 🕹️ **Controle**: `restart_service()`, `inject_event()`
+
+### Teste Rápido
+
+```bash
+source venv/bin/activate
+python test_mcp.py
+```
+
+📖 **Documentação completa**: Veja [MCP_DOCUMENTATION.md](MCP_DOCUMENTATION.md)
 
 ---
 
@@ -116,12 +156,12 @@ chmod +x test_pipeline.sh
 
 | Serviço | URL | Credenciais |
 |---------|-----|-------------|
-| **Spark Master UI** | http://localhost:8080 | - |
-| **Spark Worker UI** | http://localhost:8081 | - |
-| **Superset** | http://localhost:8088 | admin / admin |
-| **Kibana** | http://localhost:5601 | - |
-| **PgAdmin** | http://localhost:5050 | admin@admin.com / admin |
-| **Elasticsearch** | http://localhost:9200 | - |
+| **Spark Master UI** | <http://localhost:8080> | - |
+| **Spark Worker UI** | <http://localhost:8081> | - |
+| **Superset** | <http://localhost:8088> | admin / admin |
+| **Kibana** | <http://localhost:5601> | - |
+| **PgAdmin** | <http://localhost:5050> | <admin@admin.com> / admin |
+| **Elasticsearch** | <http://localhost:9200> | - |
 | **Kafka** | localhost:29092 | - |
 | **Postgres** | localhost:5432 | superset / superset |
 
@@ -130,6 +170,7 @@ chmod +x test_pipeline.sh
 ## 📊 Estrutura de Dados
 
 ### Tabela: `eventos_raw`
+
 Eventos brutos consumidos do Kafka.
 
 | Coluna | Tipo | Descrição |
@@ -143,6 +184,7 @@ Eventos brutos consumidos do Kafka.
 | processado_em | TIMESTAMP | Timestamp do processamento |
 
 ### Tabela: `eventos_agregados`
+
 Agregações por janela de tempo (5 minutos).
 
 | Coluna | Tipo | Descrição |
@@ -230,7 +272,7 @@ curl http://localhost:9200/eventos/_search?pretty
 
 ## 📈 Configurando Superset
 
-1. Acesse http://localhost:8088 (admin/admin)
+1. Acesse <http://localhost:8088> (admin/admin)
 2. **Adicionar Database**:
    - Settings → Database Connections → + Database
    - SQLAlchemy URI: `postgresql://superset:superset@postgres:5432/superset`
