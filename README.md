@@ -106,7 +106,7 @@ Perfect for:
 
 ```bash
 # 1. Clonar repositório
-git clone https://github.com/SEU_USUARIO/SUPERSET.git
+git clone https://github.com/Araken13/mcp-superset-analitics-pipeline.git
 cd SUPERSET
 
 # 2. Configurar variáveis de ambiente
