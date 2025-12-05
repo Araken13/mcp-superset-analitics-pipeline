@@ -1,0 +1,35 @@
+[Unit]
+Description=SUPERSET Data Pipeline
+Documentation=file:///home/renan3/SUPERSET/README_SISTEMA_COMPLETO.md
+After=network.target docker.service
+Requires=docker.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=renan3
+Group=renan3
+WorkingDirectory=/home/renan3/SUPERSET
+
+# Comando de inicialização
+ExecStart=/bin/bash /home/renan3/SUPERSET/startup.sh
+
+# Comando de parada (opcional)
+ExecStop=/usr/bin/docker compose -f /home/renan3/SUPERSET/docker-compose.yml down
+
+# Reiniciar em caso de falha
+Restart=on-failure
+RestartSec=30s
+
+# Timeout
+TimeoutStartSec=5min
+TimeoutStopSec=2min
+
+# Logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=superset-pipeline
+
+[Install]
+WantedBy=multi-user.target
