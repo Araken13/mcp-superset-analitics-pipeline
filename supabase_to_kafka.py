@@ -32,9 +32,24 @@ logger = logging.getLogger(__name__)
 from dotenv import load_dotenv
 load_dotenv()
 
-# Credenciais Supabase (do .env)
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://lpdskhiqmufonnnlmemg.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwZHNraGlxbXVmb25ubmxtZW1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyMzc0NjEsImV4cCI6MjA3OTgxMzQ2MX0.pdjLSvqsp2DsmajcofarW9xIGx24Sf7oDH6rpCwzt2Q")
+# Credenciais Supabase (OBRIGATÓRIO configurar no .env)
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY")
+
+# Validar que credenciais foram configuradas
+if not SUPABASE_URL:
+    raise ValueError(
+        "❌ SUPABASE_URL não configurado!\n"
+        "Configure no arquivo .env:\n"
+        "SUPABASE_URL=https://seu-projeto.supabase.co"
+    )
+
+if not SUPABASE_KEY:
+    raise ValueError(
+        "❌ SUPABASE_ANON_KEY não configurado!\n"
+        "Configure no arquivo .env:\n"
+        "SUPABASE_ANON_KEY=sua_chave_aqui"
+    )
 
 # Kafka config
 KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:29092")
