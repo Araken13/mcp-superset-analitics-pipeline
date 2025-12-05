@@ -351,8 +351,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 📞 Suporte
 
-- 📧 **Email**: <seu@email.com>
-- 🐛 **Issues**: [GitHub Issues](https://github.com/SEU_USUARIO/SUPERSET/issues)
+- 📧 **Email**: <araken_radical@hotmail.com>
+- 🐛 **Issues**: [GitHub Issues](https://github.com/Araken13/SUPERSET/issues)
 - 📖 **Docs**: [README_SISTEMA_COMPLETO.md](README_SISTEMA_COMPLETO.md)
 
 ---
