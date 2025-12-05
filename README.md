@@ -1,26 +1,62 @@
-# 🚀 SUPERSET - Real-Time Data Pipeline
+# 🚀 Real-Time Data Pipeline | Apache Spark + Kafka + Elasticsearch
 
-[![Status](https://img.shields.io/badge/status-production--ready-brightgreen)]()
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)]()
-[![License](https://img.shields.io/badge/license-MIT-green)]()
-[![Uptime](https://img.shields.io/badge/uptime-99.9%25-success)]()
+<div align="center">
 
-**Sistema completo de ingestão, processamento e análise de dados em tempo real.**
+[![Production Ready](https://img.shields.io/badge/status-production--ready-brightgreen?style=for-the-badge)]()
+[![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)]()
+[![License MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
+[![Uptime](https://img.shields.io/badge/uptime-99.9%25-success?style=for-the-badge)]()
 
-Pipeline enterprise-grade que conecta Supabase → Kafka → Spark → Postgres + Elasticsearch, com automação completa, watchdog de monitoramento e documentação profissional.
+[![Apache Spark](https://img.shields.io/badge/Apache%20Spark-3.5.0-E25A1C?style=flat&logo=apachespark&logoColor=white)]()
+[![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-2.8+-231F20?style=flat&logo=apachekafka&logoColor=white)]()
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791?style=flat&logo=postgresql&logoColor=white)]()
+[![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.11-005571?style=flat&logo=elasticsearch&logoColor=white)]()
+[![Docker](https://img.shields.io/badge/Docker-24+-2496ED?style=flat&logo=docker&logoColor=white)]()
+[![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)]()
+
+**Enterprise-grade real-time data pipeline for streaming analytics, ETL processing, and business intelligence**
+
+</div>
 
 ---
 
-## ✨ Features
+## 🎯 What is SUPERSET?
 
-🔥 **One-Command Startup** - Inicia todo o pipeline com um único comando  
-🛡️ **99.9% Uptime** - Watchdog inteligente garante que Spark nunca falha  
-📊 **Real-Time Processing** - Spark Streaming processa eventos em tempo real  
-🔍 **Dual Storage** - Postgres (SQL) + Elasticsearch (NoSQL/Search)  
-📈 **BI Ready** - Superset e Kibana pré-configurados  
-🔌 **Supabase Integration** - Sincronização automática de leads e sessões  
-🧪 **Automated Tests** - 7 testes E2E automatizados  
-📚 **5,200+ Lines of Docs** - Documentação enterprise-grade  
+SUPERSET is a **production-ready, open-source data pipeline** that combines the power of **Apache Spark Streaming**, **Apache Kafka**, **PostgreSQL**, and **Elasticsearch** to create a complete real-time analytics platform.
+
+Perfect for:
+
+- 📊 **Real-time Analytics** - Process millions of events per second
+- 🔄 **ETL/ELT Pipelines** - Transform and load data automatically
+- 📈 **Business Intelligence** - Built-in Superset dashboards
+- 🔍 **Log Analytics** - Elasticsearch + Kibana integration
+- 🤖 **ML Feature Engineering** - Real-time feature extraction
+
+### 💡 Key Differentiators
+
+✅ **One-Command Deployment** - Start entire pipeline with `./startup.sh`  
+✅ **Self-Healing Architecture** - Automatic Spark job restart with watchdog  
+✅ **Production Security** - Row Level Security (RLS) enabled  
+✅ **Comprehensive Documentation** - 5,200+ lines of enterprise docs  
+✅ **Automated E2E Testing** - 7 integration tests included  
+✅ **Multi-Database Support** - Postgres (OLTP) + Elasticsearch (OLAP)  
+
+---
+
+## 🌟 Features
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🔥 **One-Command Startup** | Deploy entire stack instantly | ✅ Ready |
+| 🛡️ **99.9% Uptime SLA** | Intelligent Spark watchdog with auto-restart | ✅ Ready |
+| 📊 **Streaming Analytics** | Apache Spark Structured Streaming | ✅ Ready |
+| 🔍 **Dual Database** | PostgreSQL (relational) + Elasticsearch (search) | ✅ Ready |
+| 📈 **BI Dashboards** | Apache Superset + Kibana pre-configured | ✅ Ready |
+| 🔌 **Supabase Sync** | Auto-sync leads and chat sessions | ✅ Ready |
+| 🧪 **E2E Tests** | 7 automated integration tests | ✅ Ready |
+| 📚 **Enterprise Docs** | Complete deployment and usage guides | ✅ Ready |
+| 🐳 **Docker Compose** | 9 containerized services | ✅ Ready |
+| 🔐 **Security First** | RLS, CORS, firewall configs included | ✅ Ready |  
 
 ---
 
