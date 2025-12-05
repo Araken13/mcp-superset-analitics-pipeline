@@ -14,6 +14,12 @@
 [![Docker](https://img.shields.io/badge/Docker-24+-2496ED?style=flat&logo=docker&logoColor=white)]()
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)]()
 
+<br />
+
+![SUPERSET Pipeline](.github/assets/linkedin-post.png)
+
+<br />
+
 **Enterprise-grade real-time data pipeline for streaming analytics, ETL processing, and business intelligence**
 
 </div>
