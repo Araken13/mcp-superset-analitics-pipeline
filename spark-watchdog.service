@@ -1,0 +1,31 @@
+[Unit]
+Description=Spark Job Watchdog - Auto Restart
+Documentation=file:///home/renan3/SUPERSET/README_SISTEMA_COMPLETO.md
+After=superset-pipeline.service
+Requires=superset-pipeline.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=renan3
+Group=renan3
+WorkingDirectory=/home/renan3/SUPERSET
+
+# Comando do watchdog
+ExecStart=/bin/bash /home/renan3/SUPERSET/spark-watchdog.sh
+
+# Reiniciar SEMPRE se o watchdog cair
+Restart=always
+RestartSec=10s
+
+# Logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=spark-watchdog
+
+# Garantir que nunca pare
+KillMode=process
+TimeoutStopSec=10s
+
+[Install]
+WantedBy=multi-user.target
