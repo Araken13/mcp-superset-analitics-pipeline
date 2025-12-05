@@ -16,3 +16,4 @@ requests>=2.32.0
 
 # Integração Supabase
 supabase>=2.11.0
+python-dotenv>=1.0.0

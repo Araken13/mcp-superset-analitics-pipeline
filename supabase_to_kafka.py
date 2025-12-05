@@ -28,9 +28,13 @@ from supabase import create_client, Client
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Credenciais Supabase (do workspace LOVABLE SITE)
-SUPABASE_URL = "https://lpdskhiqmufonnnlmemg.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwZHNraGlxbXVmb25ubmxtZW1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyMzc0NjEsImV4cCI6MjA3OTgxMzQ2MX0.pdjLSvqsp2DsmajcofarW9xIGx24Sf7oDH6rpCwzt2Q"
+# Carregar variáveis de ambiente do .env
+from dotenv import load_dotenv
+load_dotenv()
+
+# Credenciais Supabase (do .env)
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://lpdskhiqmufonnnlmemg.supabase.co")
+SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwZHNraGlxbXVmb25ubmxtZW1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyMzc0NjEsImV4cCI6MjA3OTgxMzQ2MX0.pdjLSvqsp2DsmajcofarW9xIGx24Sf7oDH6rpCwzt2Q")
 
 # Kafka config
 KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:29092")
@@ -42,73 +46,28 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def transform_lead_to_event(lead: Dict) -> Dict:
     """
-    Transforma um lead do Supabase no formato de evento do pipeline.
+    Transforma um lead do Supabase mantendo TODA a estrutura original.
     
-    Formato Supabase (leads):
-        {
-            "id": "uuid",
-            "nome": "João Silva",
-            "email": "joao@example.com",
-            "telefone": "+5511999999999",
-            "nome_empresa": "Tech Corp",
-            "nome_projeto": "Sistema Web",
-            "interesse": ["desenvolvimento", "consultoria"],
-            "score_qualificacao": 75,
-            "status_lead": "qualificado",
-            "created_at": "2025-12-04T10:30:00",
-            "utm_source": "google",
-            ...
-        }
-    
-    Formato Pipeline (eventos):
-        {
-            "id": "uuid",
-            "usuario": "joao@example.com",
-            "evento": "lead_captado",
-            "valor": 75.0,
-            "timestamp": "2025-12-04T10:30:00",
-            "categoria": "vendas",
-            "metadata": {...}
-        }
+    Agora envia o lead completo para que o Spark grave na tabela `leads`.
     """
+    # Retornar o lead completo + marcador de tipo
     return {
-        "id": lead.get("id"),
-        "usuario": lead.get("email"),
-        "evento": f"lead_{lead.get('status_lead', 'novo')}",
-        "valor": float(lead.get("score_qualificacao", 0)),
-        "timestamp": lead.get("created_at", datetime.now().isoformat()),
-        "categoria": "vendas",
-        "metadata": {
-            "nome": lead.get("nome"),
-            "telefone": lead.get("telefone"),
-            "empresa": lead.get("nome_empresa"),
-            "projeto": lead.get("nome_projeto"),
-            "interesses": lead.get("interesse", []),
-            "origem": lead.get("origem", "chatbot"),
-            "utm_source": lead.get("utm_source"),
-            "utm_medium": lead.get("utm_medium"),
-            "utm_campaign": lead.get("utm_campaign"),
-            "localizacao": lead.get("localizacao"),
-        }
+        **lead,  # Todos os campos originais
+        "tipo_evento": "lead",  # Marcador para o Spark saber qual tabela usar
+        "processado_em": datetime.now().isoformat()
     }
 
 
 def transform_session_to_event(session: Dict, messages_count: int = 0) -> Dict:
-    """Transforma uma sessão de chat em evento."""
+    """
+    Transforma uma sessão de chat mantendo TODA a estrutura original.
+    
+    Agora envia a sessão completa para que o Spark grave na tabela `chat_sessions`.
+    """
     return {
-        "id": session.get("id"),
-        "usuario": session.get("lead_id") or "anonimo",
-        "evento": "chat_session",
-        "valor": float(messages_count),
-        "timestamp": session.get("started_at", datetime.now().isoformat()),
-        "categoria": "engajamento",
-        "metadata": {
-            "total_messages": session.get("total_messages", 0),
-            "duration_seconds": session.get("duration_seconds", 0),
-            "nivel_interesse": session.get("nivel_interesse", "baixo"),
-            "intencao_detectada": session.get("intencao_detectada"),
-            "is_active": session.get("is_active", False),
-        }
+        **session,  # Todos os campos originais
+        "tipo_evento": "chat_session",  # Marcador para o Spark
+        "processado_em": datetime.now().isoformat()
     }
 
 
