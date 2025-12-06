@@ -3,8 +3,11 @@ __pycache__/
 *.pyc
 *.json
 .env
-*.pyc
-__pycache__/
-.env
-*.pyc
-__pycache__/
+.ipynb_checkpoints
+.pytest_cache
+*.log
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
