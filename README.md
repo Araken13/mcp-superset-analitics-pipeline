@@ -4,7 +4,7 @@
 
 [![Production Ready](https://img.shields.io/badge/status-production--ready-brightgreen?style=for-the-badge)]()
 [![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)]()
-[![License MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
+[![License MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](docs/LICENSE)
 [![Uptime](https://img.shields.io/badge/uptime-99.9%25-success?style=for-the-badge)]()
 
 [![Apache Spark](https://img.shields.io/badge/Apache%20Spark-3.5.0-E25A1C?style=flat&logo=apachespark&logoColor=white)]()
@@ -114,10 +114,10 @@ cp .env.example .env
 # Editar .env com suas credenciais Supabase
 
 # 3. Dar permissão aos scripts
-chmod +x startup.sh healthcheck.sh spark-watchdog.sh
+chmod +x scripts/startup.sh scripts/healthcheck.sh scripts/spark-watchdog.sh
 
 # 4. INICIAR TUDO!
-./startup.sh
+./scripts/startup.sh
 ```
 
 **Pronto!** 🎉
@@ -150,7 +150,7 @@ O **Spark Watchdog** monitora o Spark job a cada 60 segundos e reinicia automati
 
 ```bash
 # Iniciar watchdog em background
-nohup ./spark-watchdog.sh > /dev/null 2>&1 &
+nohup ./scripts/spark-watchdog.sh > /dev/null 2>&1 &
 
 # Ver logs
 tail -f /tmp/spark-watchdog.log
@@ -170,10 +170,10 @@ tail -f /tmp/spark-watchdog.log
 
 ```bash
 # Executar testes automatizados E2E
-python test_e2e_automated.py
+python src/test_e2e_automated.py
 
 # Verificar saúde do sistema
-./healthcheck.sh
+./scripts/healthcheck.sh
 ```
 
 **7 Testes Automatizados:**
@@ -192,12 +192,12 @@ python test_e2e_automated.py
 
 | Documento | Descrição |
 |-----------|-----------|
-| [README_SISTEMA_COMPLETO.md](README_SISTEMA_COMPLETO.md) | **Guia completo do sistema** (800+ linhas) |
-| [INSTALACAO_AUTOMATICA.md](INSTALACAO_AUTOMATICA.md) | Guia de instalação e automação |
-| [PLANO_DEPLOY_VPS.md](PLANO_DEPLOY_VPS.md) | Deploy em produção (VPS) |
-| [ANALISE_TECNICA_CORRECOES.md](ANALISE_TECNICA_CORRECOES.md) | Análise técnica e correções |
-| [ARQUIVOS_PARA_REVISAO.md](ARQUIVOS_PARA_REVISAO.md) | Issues e soluções |
-| [CHANGELOG.md](CHANGELOG.md) | Histórico de mudanças |
+| [README_SISTEMA_COMPLETO.md](docs/README_SISTEMA_COMPLETO.md) | **Guia completo do sistema** (800+ linhas) |
+| [INSTALACAO_AUTOMATICA.md](docs/INSTALACAO_AUTOMATICA.md) | Guia de instalação e automação |
+| [PLANO_DEPLOY_VPS.md](docs/PLANO_DEPLOY_VPS.md) | Deploy em produção (VPS) |
+| [ANALISE_TECNICA_CORRECOES.md](docs/ANALISE_TECNICA_CORRECOES.md) | Análise técnica e correções |
+| [ARQUIVOS_PARA_REVISAO.md](docs/ARQUIVOS_PARA_REVISAO.md) | Issues e soluções |
+| [CHANGELOG.md](docs/CHANGELOG.md) | Histórico de mudanças |
 
 ---
 
@@ -281,7 +281,7 @@ docker compose logs --tail 50
 
 # Reiniciar tudo
 docker compose down
-./startup.sh
+./scripts/startup.sh
 ```
 
 ### Problema: Spark job não está rodando
@@ -292,7 +292,7 @@ docker exec spark-master curl -s http://localhost:8080/json/
 
 # Reiniciar job
 docker exec spark-master pkill -f spark-submit
-./startup.sh
+./scripts/startup.sh
 ```
 
 ### Problema: Dados não aparecem
@@ -311,7 +311,7 @@ curl "localhost:9200/eventos/_count?pretty"
 **Comando rápido de diagnóstico:**
 
 ```bash
-./healthcheck.sh
+./scripts/healthcheck.sh
 ```
 
 ---
@@ -345,7 +345,7 @@ Contribuições são bem-vindas!
 
 ## 📝 License
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](docs/LICENSE) para mais detalhes.
 
 ---
 
@@ -353,7 +353,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 - 📧 **Email**: <araken_radical@hotmail.com>
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Araken13/SUPERSET/issues)
-- 📖 **Docs**: [README_SISTEMA_COMPLETO.md](README_SISTEMA_COMPLETO.md)
+- 📖 **Docs**: [README_SISTEMA_COMPLETO.md](docs/README_SISTEMA_COMPLETO.md)
 
 ---
 
